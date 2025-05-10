@@ -15,7 +15,7 @@
         font-family: "Poppins", sans-serif;
         transition: background-color 0.3s, color 0.3s;
       }
-      .dark {
+      .dark body {
         background-color: #1f2937;
         color: #e5e7eb;
       }
@@ -57,8 +57,13 @@
         margin-right: 8px;
       }
       @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-5px); }
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
       }
       .logo:hover {
         animation: bounce 0.5s ease;
@@ -90,24 +95,24 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-      border: 4px solid #ffc107;
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+        border: 4px solid #ffc107;
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
         z-index: 50;
-      }
-      .dark .spinner {
-        border-color: #ffd700;
-        border-top-color: #e5e7eb;
       }
       .spinner.active {
         display: block;
       }
       @keyframes spin {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(360deg); }
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
       }
       .admin-section {
         background-color: #d97706;
@@ -130,41 +135,6 @@
           height: 250px;
         }
       }
-      /* Ensure all elements have dark mode styling */
-      .dark input,
-      .dark select,
-      .dark textarea {
-        background-color: #374151;
-        border-color: #4b5563;
-        color: #e5e7eb;
-      }
-      .dark .bg-amber-100 {
-        background-color: #374151;
-      }
-      .dark .bg-amber-400 {
-        background-color: #b45309;
-      }
-      .dark .bg-amber-500 {
-        background-color: #c2410c;
-      }
-      .dark .bg-amber-600 {
-        background-color: #9a3412;
-      }
-      .dark .text-amber-600 {
-        color: #f59e0b;
-      }
-      .dark .text-red-600 {
-        color: #ef4444;
-      }
-      .dark .text-green-600 {
-        color: #10b981;
-      }
-      .dark .bg-gray-300 {
-        background-color: #4b5563;
-      }
-      .dark .bg-blue-600 {
-        background-color: #2563eb;
-      }
     </style>
   </head>
   <body class="bg-amber-50 text-gray-800">
@@ -173,14 +143,14 @@
 
     <!-- Sidebar -->
     <div
-      class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-amber-400 to-amber-500 dark:from-gray-700 dark:to-gray-800 shadow-lg sidebar md:translate-x-0 sidebar-hidden"
+      class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-amber-400 to-amber-500 shadow-lg sidebar md:translate-x-0 sidebar-hidden"
       id="sidebar"
       aria-label="Navigasyon Menüsü"
     >
       <div class="p-4 flex justify-between items-center">
         <h2 class="logo">Shawarma Box</h2>
         <button
-          class="md:hidden text-white dark:text-gray-200 text-xl"
+          class="md:hidden text-white text-xl"
           onclick="toggleSidebar()"
           aria-label="Menüyü Kapat"
         >
@@ -188,84 +158,84 @@
         </button>
       </div>
       <nav class="mt-4" role="navigation">
-        <h3 class="px-4 py-2 text-white dark:text-gray-200 font-semibold">Kullanıcı</h3>
+        <h3 class="px-4 py-2 text-white font-semibold">Kullanıcı</h3>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('login')"
         >
           Giriş
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('register')"
         >
           Kayıt
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('home')"
         >
           Ana Sayfa
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('cart')"
         >
           Sepet
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('checkout')"
         >
           Ödeme
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('orderStatus')"
         >
           Sipariş Durumu
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('profile')"
         >
           Profil
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-300"
           onclick="showPage('notifications')"
         >
           Bildirimler
         </button>
         <h3
-          class="px-4 py-2 text-white dark:text-gray-200 font-semibold mt-4 hidden"
+          class="px-4 py-2 text-white font-semibold mt-4 hidden"
           id="adminNav"
         >
           Yönetici
         </h3>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-300"
           id="adminDashboardBtn"
           onclick="showPage('adminDashboard')"
         >
           Yönetim Paneli
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-300"
           id="orderManagementBtn"
           onclick="showPage('orderManagement')"
         >
           Sipariş Yönetimi
-        </ XAIArtifact>button>
+        </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-300"
           id="customerDataBtn"
           onclick="showPage('customerData')"
         >
           Müşteri Verileri
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white dark:text-gray-200 hover:bg-amber-600 dark:hover:bg-gray-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden focus:outline-none focus:ring-2 focus:ring-amber-300"
           id="promotionManagementBtn"
           onclick="showPage('promotionManagement')"
         >
@@ -281,16 +251,16 @@
         class="bg-amber-500 dark:bg-gray-800 text-white p-4 flex items-center justify-between sticky top-0 z-20 shadow-md"
       >
         <button
-          class="md:hidden text-white dark:text-gray-200 text-2xl focus:outline-none"
+          class="md:hidden text-white text-2xl focus:outline-none"
           onclick="toggleSidebar()"
           aria-label="Menüyü Aç"
         >
           ☰
         </button>
-        <div></div>
+        <h1 class="logo">Shawarma Box</h1>
         <button
           id="themeToggle"
-          class="text-white dark:text-gray-200 focus:outline-none p-2 rounded-full hover:bg-amber-600 dark:hover:bg-gray-600"
+          class="text-white focus:outline-none"
           aria-label="Tema Değiştir"
         >
           🌙
@@ -308,7 +278,7 @@
           <input
             type="email"
             id="loginEmail"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             required
             aria-required="true"
           />
@@ -318,13 +288,13 @@
           <input
             type="password"
             id="loginPassword"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             required
             aria-required="true"
           />
         </div>
         <button
-          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="login()"
         >
           Giriş Yap
@@ -342,13 +312,13 @@
         </div>
         <div class="mt-4">
           <button
-            class="w-full bg-blue-600 dark:bg-blue-700 text-white p-3 rounded hover:bg-blue-700 dark:hover:bg-blue-800 text-sm focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+            class="w-full bg-blue-600 dark:bg-blue-700 text-white p-3 rounded hover:bg-blue-700 dark:hover:bg-blue-800 text-sm focus:ring-2 focus:ring-blue-400"
           >
             Google ile Giriş
           </button>
         </div>
         <button
-          class="w-full mt-4 bg-amber-600 dark:bg-amber-700 text-white p-3 rounded hover:bg-amber-700 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full mt-4 bg-amber-600 dark:bg-amber-700 text-white p-3 rounded hover:bg-amber-700 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="loginAdmin()"
         >
           Admin Giriş
@@ -365,7 +335,7 @@
           <input
             type="text"
             id="regName"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             required
             aria-required="true"
           />
@@ -375,7 +345,7 @@
           <input
             type="email"
             id="regEmail"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             required
             aria-required="true"
           />
@@ -385,7 +355,7 @@
           <input
             type="tel"
             id="regPhone"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
           />
         </div>
         <div class="mb-4">
@@ -393,7 +363,7 @@
           <input
             type="password"
             id="regPassword"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 Rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             required
             aria-required="true"
           />
@@ -402,7 +372,7 @@
           <label class="flex items-center text-sm">
             <input
               type="checkbox"
-              class="mr-2 dark:bg-gray-700 dark:border-gray-600 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="mr-2 dark:bg-gray-700 dark:border-gray-600 focus:ring-amber-400"
               required
               aria-required="true"
             />
@@ -410,7 +380,7 @@
           </label>
         </div>
         <button
-          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="register()"
         >
           Kayıt Ol
@@ -423,7 +393,7 @@
         </button>
         <div class="mt-4">
           <button
-            class="w-full bg-blue-600 dark:bg-blue-700 text-white p-3 rounded hover:bg-blue-700 dark:hover:bg-blue-800 text-sm focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
+            class="w-full bg-blue-600 dark:bg-blue-700 text-white p-3 rounded hover:bg-blue-700 dark:hover:bg-blue-800 text-sm focus:ring-2 focus:ring-blue-400"
           >
             Google ile Kayıt
           </button>
@@ -434,34 +404,34 @@
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Menü</h2>
         <div class="flex flex-wrap gap-2 mb-4">
           <button
-            class="bg-amber-200 dark:bg-gray-600 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-gray-500 focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="bg-amber-200 dark:bg-amber-700 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-amber-600 focus:ring-2 focus:ring-amber-400"
           >
             Tümü
           </button>
           <button
-            class="bg-amber-200 dark:bg-gray-600 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-gray-500 focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="bg-amber-200 dark:bg-amber-700 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-amber-600 focus:ring-2 focus:ring-amber-400"
           >
             Shawarma
           </button>
           <button
-            class="bg-amber-200 dark:bg-gray-600 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-gray-500 focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="bg-amber-200 dark:bg-amber-700 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-amber-600 focus:ring-2 focus:ring-amber-400"
           >
             Yan Ürünler
           </button>
           <button
-            class="bg-amber-200 dark:bg-gray-600 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-gray-500 focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="bg-amber-200 dark:bg-amber-700 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-amber-600 focus:ring-2 focus:ring-amber-400"
           >
             İçecekler
           </button>
           <button
-            class="bg-amber-200 dark:bg-gray-600 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-gray-500 focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="bg-amber-200 dark:bg-amber-700 text-amber-800 dark:text-amber-200 px-3 py-1 rounded text-sm hover:bg-amber-300 dark:hover:bg-amber-600 focus:ring-2 focus:ring-amber-400"
           >
             Tatlılar
           </button>
         </div>
         <input
           type="text"
-          class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mb-4 text-sm focus:ring-2 focus:ring-amber-400"
           placeholder="Ara..."
           aria-label="Menüde ara"
         />
@@ -514,7 +484,7 @@
           </div>
         </div>
         <button
-          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('cart')"
         >
           Sepete Git
@@ -532,7 +502,7 @@
               type="number"
               min="1"
               value="2"
-              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mr-2 text-sm focus:ring-2 focus:ring-amber-400"
               aria-label="Miktar"
             />
             <span class="mr-4">100 TL</span>
@@ -557,7 +527,7 @@
               type="number"
               min="1"
               value="1"
-              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mr-2 text-sm focus:ring-2 focus:ring-amber-400"
               aria-label="Miktar"
             />
             <span class="mr-4">25 TL</span>
@@ -582,7 +552,7 @@
               type="number"
               min="1"
               value="2"
-              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mr-2 text-sm focus:ring-2 focus:ring-amber-400"
               aria-label="Miktar"
             />
             <span class="mr-4">30 TL</span>
@@ -607,7 +577,7 @@
               type="number"
               min="1"
               value="1"
-              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="w-16 p-1 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mr-2 text-sm focus:ring-2 focus:ring-amber-400"
               aria-label="Miktar"
             />
             <span class="mr-4">25 TL</span>
@@ -623,11 +593,11 @@
             </button>
           </div>
         </div>
-        <div class="mb-4 mt-absent">
+        <div class="mb-4 mt-4">
           <label class="block mb-1 text-sm">Promosyon Kodu</label>
           <input
             type="text"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             placeholder="Kodu girin"
             aria-label="Promosyon kodu"
           />
@@ -639,7 +609,7 @@
           (KDV: 15 TL, Teslimat Ücreti: 5 TL, İndirim: -10 TL)
         </div>
         <button
-          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('checkout')"
         >
           Ödemeye Devam Et
@@ -651,7 +621,7 @@
         <div class="mb-4">
           <label class="block mb-1 text-sm">Teslimat Adresi</label>
           <select
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             aria-label="Teslimat adresi seç"
           >
             <option>Ev: Atatürk Cd. No:10</option>
@@ -662,7 +632,7 @@
         <div class="mb-4">
           <label class="block mb-1 text-sm">Ödeme Yöntemi</label>
           <select
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             aria-label="Ödeme yöntemi seç"
           >
             <option>Stripe - Kredi Kartı 💳</option>
@@ -684,7 +654,7 @@
           <strong>Toplam: 190 TL</strong>
         </div>
         <button
-          class="mt-4 w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('orderStatus')"
         >
           Siparişi Onayla
@@ -736,13 +706,13 @@
           - 25/04/2025: -20 Puan (Kullanıldı)<br />
           Referans Kodu: ABC123<br />
           <button
-            class="mt-2 bg-amber-500 dark:bg-amber-700 text-white p-2 rounded hover:bg-amber-600 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="mt-2 bg-amber-500 dark:bg-amber-700 text-white p-2 rounded hover:bg-amber-600 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
             onclick="alert('Puan Kullanıldı')"
           >
             Puan Kullan
           </button>
           <button
-            class="mt-2 bg-amber-500 dark:bg-amber-700 text-white p-2 rounded hover:bg-amber-600 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="mt-2 bg-amber-500 dark:bg-amber-700 text-white p-2 rounded hover:bg-amber-600 dark:hover:bg-amber-800 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
             onclick="alert('Referans Kodu Paylaşıldı')"
           >
             Referans Kodu Paylaş
@@ -751,7 +721,7 @@
             <label class="block mb-1 text-sm">Yeni Referans Kodu</label>
             <input
               type="text"
-              class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+              class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
               placeholder="Referans kodu girin"
               aria-label="Referans kodu"
             />
@@ -810,7 +780,7 @@
         <div
           class="bg-amber-600 dark:bg-gray-600 text-white p-4 rounded text-sm"
         >
-          Bekleyen Siparişler: 5<br />
+          Bekleyen Siparişler菪菪Bekleyen Siparişler: 5<br />
           Günlük Gelir: 250 TL<br />
           Haftalık Trend: %10 Artış<br />
           Popüler Ürün: Tavuk Shawarma<br />
@@ -837,7 +807,7 @@
           </div>
         </div>
         <button
-          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('orderManagement')"
         >
           Siparişleri Yönet
@@ -909,7 +879,7 @@
           </button>
         </div>
         <button
-          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
@@ -963,7 +933,7 @@
           </div>
         </div>
         <button
-          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-4 bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
@@ -982,7 +952,7 @@
           <input
             type="text"
             id="promoName"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             placeholder="Ör: Yaz İndirimi"
             aria-label="Promosyon adı"
           />
@@ -992,7 +962,7 @@
           <input
             type="number"
             id="promoDiscount"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             placeholder="Ör: 10"
             aria-label="İndirim yüzdesi"
           />
@@ -1002,7 +972,7 @@
           <input
             type="date"
             id="promoStart"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             aria-label="Başlangıç tarihi"
           />
         </div>
@@ -1011,14 +981,14 @@
           <input
             type="date"
             id="promoEnd"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             aria-label="Bitiş tarihi"
           />
         </div>
         <div class="mb-4">
           <label class="block mb-1 text-sm">Hedef Kitle</label>
           <select
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             aria-label="Hedef kitle"
           >
             <option>Tüm Müşteriler</option>
@@ -1031,7 +1001,7 @@
           <input
             type="text"
             id="promoCode"
-            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+            class="w-full p-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-amber-400"
             placeholder="Ör: YAZ10"
             aria-label="Promosyon kodu"
           />
@@ -1044,13 +1014,13 @@
           <p>Promosyon: [Ad] - [İndirim]% İndirim - Kod: [Kod]</p>
         </div>
         <button
-          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="createPromotion()"
         >
           Oluştur
         </button>
         <button
-          class="mt-2 w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400 dark:focus:ring-amber-300"
+          class="mt-2 w-full bg-amber-400 dark:bg-amber-600 text-white p-3 rounded hover:bg-amber-500 dark:hover:bg-amber-700 btn-ripple text-sm focus:ring-2 focus:ring-amber-400"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
@@ -1139,13 +1109,16 @@
         const name = document.getElementById("regName").value;
         const email = document.getElementById("regEmail").value;
         const password = document.getElementById("regPassword").value;
-        const terms = document.querySelector("#register input[type='checkbox']")
-          .checked;
+        const terms = document.querySelector(
+          "#register input[type='checkbox']"
+        ).checked;
         if (validateInput(name, email, password) && terms) {
           alert("Kayıt Başarılı! Giriş Yapabilirsiniz...");
           showPage("login");
         } else {
-          alert("Lütfen tüm alanları doldurun ve kullanım koşullarını kabul edin!");
+          alert(
+            "Lütfen tüm alanları doldurun ve kullanım koşullarını kabul edin!"
+          );
         }
       }
 
@@ -1155,7 +1128,9 @@
         const discount = document.getElementById("promoDiscount").value;
         const code = document.getElementById("promoCode").value;
         if (validateInput(name, discount, code)) {
-          const preview = document.getElementById("promoPreview").querySelector("p");
+          const preview = document
+            .getElementById("promoPreview")
+            .querySelector("p");
           preview.textContent = `Promosyon: ${name} - ${discount}% İndirim - Kod: ${code}`;
           alert("Promosyon Oluşturuldu!");
         } else {
@@ -1185,7 +1160,10 @@
             responsive: true,
             maintainAspectRatio: true,
             scales: {
-              y: { beginAtZero: true, title: { display: true, text: "Satış (TL)" } },
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "Satış (TL)" },
+              },
               x: { title: { display: true, text: "Gün" } },
             },
             plugins: {
@@ -1303,10 +1281,17 @@
 
       // Theme Toggle
       function toggleTheme() {
-        const isDark = document.documentElement.classList.toggle("dark");
+        document.documentElement.classList.toggle("dark");
         const themeToggle = document.getElementById("themeToggle");
-        themeToggle.textContent = isDark ? "☀️" : "🌙";
-        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeToggle.textContent = document.documentElement.classList.contains(
+          "dark"
+        )
+          ? "☀️"
+          : "🌙";
+        localStorage.setItem(
+          "theme",
+          document.documentElement.classList.contains("dark") ? "dark" : "light"
+        );
       }
 
       // Initialize Theme
@@ -1315,10 +1300,10 @@
         if (savedTheme === "dark") {
           document.documentElement.classList.add("dark");
           document.getElementById("themeToggle").textContent = "☀️";
-        } else {
-          document.getElementById("themeToggle").textContent = "🌙";
         }
-        document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+        document
+          .getElementById("themeToggle")
+          .addEventListener("click", toggleTheme);
       });
     </script>
   </body>
