@@ -21,7 +21,7 @@
         transform: translateX(-100%);
       }
       .page {
-        transition: opacity 0.3s ease;
+        transition: opacity 0.5s ease;
         opacity: 0;
       }
       .page.active {
@@ -37,25 +37,25 @@
         color: #fff;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         position: relative;
+        display: inline-flex;
+        align-items: center;
       }
       .logo::before {
         content: "🌯";
-        position: absolute;
-        left: -30px;
-        top: 5px;
         font-size: 1.5rem;
+        margin-right: 8px;
       }
-      @keyframes pulse {
+      @keyframes bounce {
         0%,
         100% {
-          transform: scale(1);
+          transform: translateY(0);
         }
         50% {
-          transform: scale(1.05);
+          transform: translateY(-5px);
         }
       }
       .logo:hover {
-        animation: pulse 1s infinite;
+        animation: bounce 0.5s ease;
       }
       .btn-ripple {
         position: relative;
@@ -77,9 +77,39 @@
         width: 200px;
         height: 200px;
       }
+      .spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 4px solid #ffc107;
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+      .spinner.active {
+        display: block;
+      }
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+      .admin-section {
+        background-color: #d97706;
+      }
     </style>
   </head>
   <body class="bg-amber-50 text-gray-800">
+    <!-- Spinner -->
+    <div id="spinner" class="spinner"></div>
+
     <!-- Sidebar -->
     <div
       class="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-amber-400 to-amber-500 shadow-lg sidebar md:translate-x-0 sidebar-hidden"
@@ -89,6 +119,7 @@
         <h2 class="logo">Shawarma Box</h2>
       </div>
       <nav class="mt-4">
+        <h3 class="px-4 py-2 text-white font-semibold">Kullanıcı</h3>
         <button
           class="w-full text-left px-4 py-2 text-white hover:bg-amber-600"
           onclick="showPage('login')"
@@ -137,26 +168,36 @@
         >
           Bildirimler
         </button>
+        <h3
+          class="px-4 py-2 text-white font-semibold mt-4 hidden"
+          id="adminNav"
+        >
+          Yönetici
+        </h3>
         <button
-          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden"
+          id="adminDashboardBtn"
           onclick="showPage('adminDashboard')"
         >
           Yönetim Paneli
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden"
+          id="orderManagementBtn"
           onclick="showPage('orderManagement')"
         >
           Sipariş Yönetimi
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden"
+          id="customerDataBtn"
           onclick="showPage('customerData')"
         >
           Müşteri Verileri
         </button>
         <button
-          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600"
+          class="w-full text-left px-4 py-2 text-white hover:bg-amber-600 hidden"
+          id="promotionManagementBtn"
           onclick="showPage('promotionManagement')"
         >
           Promosyon Yönetimi
@@ -165,10 +206,10 @@
     </div>
 
     <!-- Main Content -->
-    <div class="md:ml-64">
+    <div class="md:ml-64 min-h-screen">
       <!-- Header -->
       <header
-        class="bg-amber-500 text-white p-4 flex items-center justify-between"
+        class="bg-amber-500 text-white p-4 flex items-center justify-between sticky top-0 z-10"
       >
         <button class="md:hidden text-white text-2xl" onclick="toggleSidebar()">
           ☰
@@ -188,7 +229,7 @@
           <input
             type="email"
             id="loginEmail"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             required
           />
         </div>
@@ -197,32 +238,40 @@
           <input
             type="password"
             id="loginPassword"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             required
           />
         </div>
         <button
-          class="w-full bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="w-full bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="login()"
         >
           Giriş Yap
         </button>
         <div class="flex justify-between mt-4">
           <button
-            class="text-amber-600 hover:underline"
+            class="text-amber-600 hover:underline text-sm"
             onclick="showPage('register')"
           >
             Kayıt Ol
           </button>
-          <a href="#" class="text-amber-600 hover:underline">Şifremi Unuttum</a>
+          <a href="#" class="text-amber-600 hover:underline text-sm"
+            >Şifremi Unuttum</a
+          >
         </div>
         <div class="mt-4">
           <button
-            class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 text-sm"
           >
             Google ile Giriş
           </button>
         </div>
+        <button
+          class="w-full mt-4 bg-amber-600 text-white p-3 rounded hover:bg-amber-700 btn-ripple text-sm"
+          onclick="loginAdmin()"
+        >
+          Admin Giriş
+        </button>
       </div>
 
       <div id="register" class="page p-4 max-w-md mx-auto hidden">
@@ -235,7 +284,7 @@
           <input
             type="text"
             id="regName"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             required
           />
         </div>
@@ -244,7 +293,7 @@
           <input
             type="email"
             id="regEmail"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             required
           />
         </div>
@@ -253,7 +302,7 @@
           <input
             type="tel"
             id="regPhone"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
           />
         </div>
         <div class="mb-4">
@@ -261,31 +310,31 @@
           <input
             type="password"
             id="regPassword"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             required
           />
         </div>
         <div class="mb-4">
-          <label class="flex items-center">
+          <label class="flex items-center text-sm">
             <input type="checkbox" class="mr-2" /> Kullanım Koşullarını Kabul
             Ediyorum
           </label>
         </div>
         <button
-          class="w-full bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="w-full bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="register()"
         >
           Kayıt Ol
         </button>
         <button
-          class="w-full mt-2 text-amber-600 hover:underline"
+          class="w-full mt-2 text-amber-600 hover:underline text-sm"
           onclick="showPage('login')"
         >
           Geri Giriş
         </button>
         <div class="mt-4">
           <button
-            class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            class="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 text-sm"
           >
             Google ile Kayıt
           </button>
@@ -294,52 +343,77 @@
 
       <div id="home" class="page p-4 hidden">
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Menü</h2>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <button class="bg-amber-200 text-amber-800 px-3 py-1 rounded text-sm">
+            Tümü
+          </button>
+          <button class="bg-amber-200 text-amber-800 px-3 py-1 rounded text-sm">
+            Shawarma
+          </button>
+          <button class="bg-amber-200 text-amber-800 px-3 py-1 rounded text-sm">
+            Yan Ürünler
+          </button>
+          <button class="bg-amber-200 text-amber-800 px-3 py-1 rounded text-sm">
+            İçecekler
+          </button>
+          <button class="bg-amber-200 text-amber-800 px-3 py-1 rounded text-sm">
+            Tatlılar
+          </button>
+        </div>
         <input
           type="text"
-          class="w-full p-2 rounded border border-gray-300 mb-4"
+          class="w-full p-3 rounded border border-gray-300 mb-4 text-sm"
           placeholder="Ara..."
         />
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Tavuk Shawarma</h3>
-            <p>
+            <p class="text-sm">
               Lezzetli tavuk, taze sebzeler - 50 TL
               <span class="text-red-600">[Baharatlı]</span>
             </p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Et Shawarma</h3>
-            <p>Özel soslu dana eti - 60 TL</p>
+            <p class="text-sm">Özel soslu dana eti - 60 TL</p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Vegan Shawarma</h3>
-            <p>
+            <p class="text-sm">
               Sebze ve humus - 45 TL <span class="text-green-600">[Vegan]</span>
             </p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Patates Kızartması</h3>
-            <p>Kıtır kıtır - 20 TL</p>
+            <p class="text-sm">Kıtır kıtır - 20 TL</p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Ayran</h3>
-            <p>Geleneksel içecek - 10 TL</p>
+            <p class="text-sm">Geleneksel içecek - 10 TL</p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Kola</h3>
-            <p>Soğuk içecek - 15 TL</p>
+            <p class="text-sm">Soğuk içecek - 15 TL</p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Baklava</h3>
-            <p>Fıstıklı tatlı - 25 TL</p>
+            <p class="text-sm">Fıstıklı tatlı - 25 TL</p>
           </div>
           <div class="item bg-amber-100 p-4 rounded shadow">
             <h3 class="font-semibold">Künefe</h3>
-            <p>Peynirli tatlı - 30 TL</p>
+            <p class="text-sm">Peynirli tatlı - 30 TL</p>
+          </div>
+          <div class="item bg-amber-100 p-4 rounded shadow">
+            <h3 class="font-semibold">Humus</h3>
+            <p class="text-sm">Tahinli dip sos - 15 TL</p>
+          </div>
+          <div class="item bg-amber-100 p-4 rounded shadow">
+            <h3 class="font-semibold">Fanta</h3>
+            <p class="text-sm">Ferahlatıcı içecek - 15 TL</p>
           </div>
         </div>
         <button
-          class="mt-4 bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('cart')"
         >
           Sepete Git
@@ -348,48 +422,100 @@
 
       <div id="cart" class="page p-4 hidden">
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Sepet</h2>
-        <div class="item bg-amber-100 p-4 rounded shadow flex justify-between">
-          <span>Tavuk Shawarma (Ek Sos, 2x) - 100 TL</span>
-          <div>
-            <button class="text-amber-600 hover:underline">Düzenle</button>
-            <button class="text-red-600 hover:underline ml-2">Sil</button>
+        <div
+          class="item bg-amber-100 p-4 rounded shadow flex flex-col sm:flex-row justify-between mb-2"
+        >
+          <span>Tavuk Shawarma (Ek Sos, 2x)</span>
+          <div class="flex items-center mt-2 sm:mt-0">
+            <input
+              type="number"
+              min="1"
+              value="2"
+              class="w-16 p-1 rounded border border-gray-300 mr-2 text-sm"
+            />
+            <span class="mr-4">100 TL</span>
+            <button class="text-amber-600 hover:underline text-sm">
+              Düzenle
+            </button>
+            <button class="text-red-600 hover:underline ml-2 text-sm">
+              Sil
+            </button>
           </div>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow flex justify-between">
-          <span>Patates Kızartması (Büyük) - 25 TL</span>
-          <div>
-            <button class="text-amber-600 hover:underline">Düzenle</button>
-            <button class="text-red-600 hover:underline ml-2">Sil</button>
+        <div
+          class="item bg-amber-100 p-4 rounded shadow flex flex-col sm:flex-row justify-between mb-2"
+        >
+          <span>Patates Kızartması (Büyük)</span>
+          <div class="flex items-center mt-2 sm:mt-0">
+            <input
+              type="number"
+              min="1"
+              value="1"
+              class="w-16 p-1 rounded border border-gray-300 mr-2 text-sm"
+            />
+            <span class="mr-4">25 TL</span>
+            <button class="text-amber-600 hover:underline text-sm">
+              Düzenle
+            </button>
+            <button class="text-red-600 hover:underline ml-2 text-sm">
+              Sil
+            </button>
           </div>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow flex justify-between">
-          <span>Kola (2x) - 30 TL</span>
-          <div>
-            <button class="text-amber-600 hover:underline">Düzenle</button>
-            <button class="text-red-600 hover:underline ml-2">Sil</button>
+        <div
+          class="item bg-amber-100 p-4 rounded shadow flex flex-col sm:flex-row justify-between mb-2"
+        >
+          <span>Kola (2x)</span>
+          <div class="flex items-center mt-2 sm:mt-0">
+            <input
+              type="number"
+              min="1"
+              value="2"
+              class="w-16 p-1 rounded border border-gray-300 mr-2 text-sm"
+            />
+            <span class="mr-4">30 TL</span>
+            <button class="text-amber-600 hover:underline text-sm">
+              Düzenle
+            </button>
+            <button class="text-red-600 hover:underline ml-2 text-sm">
+              Sil
+            </button>
           </div>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow flex justify-between">
-          <span>Baklava - 25 TL</span>
-          <div>
-            <button class="text-amber-600 hover:underline">Düzenle</button>
-            <button class="text-red-600 hover:underline ml-2">Sil</button>
+        <div
+          class="item bg-amber-100 p-4 rounded shadow flex flex-col sm:flex-row justify-between mb-2"
+        >
+          <span>Baklava</span>
+          <div class="flex items-center mt-2 sm:mt-0">
+            <input
+              type="number"
+              min="1"
+              value="1"
+              class="w-16 p-1 rounded border border-gray-300 mr-2 text-sm"
+            />
+            <span class="mr-4">25 TL</span>
+            <button class="text-amber-600 hover:underline text-sm">
+              Düzenle
+            </button>
+            <button class="text-red-600 hover:underline ml-2 text-sm">
+              Sil
+            </button>
           </div>
         </div>
         <div class="mb-4 mt-4">
-          <label class="block mb-1">Promosyon Kodu</label>
+          <label class="block mb-1 text-sm">Promosyon Kodu</label>
           <input
             type="text"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             placeholder="Kodu girin"
           />
         </div>
-        <div class="bg-amber-400 text-white p-4 rounded mt-4">
+        <div class="bg-amber-400 text-white p-4 rounded mt-4 text-sm">
           Toplam: 180 TL<br />
           (KDV: 15 TL, Teslimat Ücreti: 5 TL, İndirim: -10 TL)
         </div>
         <button
-          class="mt-4 bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('checkout')"
         >
           Ödemeye Devam Et
@@ -399,20 +525,22 @@
       <div id="checkout" class="page p-4 max-w-md mx-auto hidden">
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Ödeme</h2>
         <div class="mb-4">
-          <label class="block mb-1">Teslimat Adresi</label>
-          <select class="w-full p-2 rounded border border-gray-300">
+          <label class="block mb-1 text-sm">Teslimat Adresi</label>
+          <select class="w-full p-3 rounded border border-gray-300 text-sm">
             <option>Ev: Atatürk Cd. No:10</option>
             <option>İş: Cumhuriyet Cd. No:5</option>
+            <option>Yeni Adres Ekle</option>
           </select>
         </div>
         <div class="mb-4">
-          <label class="block mb-1">Ödeme Yöntemi</label>
-          <select class="w-full p-2 rounded border border-gray-300">
+          <label class="block mb-1 text-sm">Ödeme Yöntemi</label>
+          <select class="w-full p-3 rounded border border-gray-300 text-sm">
             <option>Stripe - Kredi Kartı 💳</option>
             <option>Nakit 💵</option>
+            <option>PayPal 💸</option>
           </select>
         </div>
-        <div class="bg-amber-400 text-white p-4 rounded">
+        <div class="bg-amber-400 text-white p-4 rounded text-sm">
           Sipariş Özeti:<br />
           Tavuk Shawarma (2x) - 100 TL<br />
           Patates Kızartması - 25 TL<br />
@@ -424,7 +552,7 @@
           <strong>Toplam: 190 TL</strong>
         </div>
         <button
-          class="mt-4 w-full bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 w-full bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('orderStatus')"
         >
           Siparişi Onayla
@@ -435,18 +563,20 @@
         <h2 class="text-2xl font-semibold mb-4">
           Shawarma Box - Sipariş Durumu
         </h2>
-        <div class="bg-amber-400 text-white p-4 rounded">
+        <div class="bg-amber-400 text-white p-4 rounded text-sm">
           Sipariş No: #12345<br />
           Tahmini Teslimat: 30 dk<br />
           Durum: Hazırlanıyor<br />
-          <div class="mt-4 flex justify-between text-center">
-            <div class="w-1/3 bg-amber-500 p-2 rounded">
+          <div
+            class="mt-4 flex flex-col sm:flex-row justify-between text-center gap-2"
+          >
+            <div class="flex-1 bg-amber-500 p-2 rounded">
               📝 Sipariş Alındı<br />10:00
             </div>
-            <div class="w-1/3 bg-amber-300 p-2 rounded">
+            <div class="flex-1 bg-amber-300 p-2 rounded">
               🍴 Hazırlanıyor<br />10:05
             </div>
-            <div class="w-1/3 bg-gray-300 p-2 rounded">
+            <div class="flex-1 bg-gray-300 p-2 rounded">
               🚀 Teslim Edildi<br />-
             </div>
           </div>
@@ -455,7 +585,7 @@
 
       <div id="profile" class="page p-4 max-w-md mx-auto hidden">
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Profil</h2>
-        <div class="bg-amber-400 text-white p-4 rounded">
+        <div class="bg-amber-400 text-white p-4 rounded text-sm">
           Kullanıcı: Ahmet Yılmaz<br />
           Sipariş Geçmişi:<br />
           - 01/05/2025: Tavuk Shawarma - 50 TL<br />
@@ -467,228 +597,262 @@
           Puan Geçmişi:<br />
           - 01/05/2025: +50 Puan<br />
           - 28/04/2025: +60 Puan<br />
+          - 25/04/2025: -20 Puan (Kullanıldı)<br />
           Referans Kodu: ABC123<br />
           <button
-            class="mt-2 bg-amber-500 text-white p-2 rounded hover:bg-amber-600 btn-ripple"
+            class="mt-2 bg-amber-500 text-white p-2 rounded hover:bg-amber-600 btn-ripple text-sm"
             onclick="alert('Puan Kullanıldı')"
           >
             Puan Kullan
           </button>
           <button
-            class="mt-2 bg-amber-500 text-white p-2 rounded hover:bg-amber-600 btn-ripple"
+            class="mt-2 bg-amber-500 text-white p-2 rounded hover:bg-amber-600 btn-ripple text-sm"
             onclick="alert('Referans Kodu Paylaşıldı')"
           >
             Referans Kodu Paylaş
           </button>
           <div class="mt-4">
-            <label class="block mb-1">Yeni Referans Kodu</label>
+            <label class="block mb-1 text-sm">Yeni Referans Kodu</label>
             <input
               type="text"
-              class="w-full p-2 rounded border border-gray-300"
+              class="w-full p-3 rounded border border-gray-300 text-sm"
               placeholder="Referans kodu girin"
             />
           </div>
           <div class="mt-4">
-            <h3 class="font-semibold">Referans Lider Tablosu</h3>
-            <p>1. Ayşe - 5 davet<br />2. Mehmet - 3 davet</p>
+            <h3 class="font-semibold text-sm">Referans Lider Tablosu</h3>
+            <p class="text-sm">
+              1. Ayşe - 5 davet<br />2. Mehmet - 3 davet<br />3. Fatma - 2 davet
+            </p>
           </div>
         </div>
       </div>
 
       <div id="notifications" class="page p-4 hidden">
         <h2 class="text-2xl font-semibold mb-4">Shawarma Box - Bildirimler</h2>
-        <div class="item bg-amber-100 p-4 rounded shadow relative">
+        <div class="item bg-amber-100 p-4 rounded shadow relative mb-2 text-sm">
           Yeni Promosyon: %10 İndirim! - 10/05/2025
           <span
             class="absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full px-2 py-1"
             >Yeni</span
           >
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Siparişiniz Hazırlanıyor - 09/05/2025
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           50 Puan Kazandınız! - 08/05/2025
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Yeni Menü: Vegan Shawarma! - 07/05/2025
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Siparişiniz Teslim Edildi - 06/05/2025
+        </div>
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Haftalık İndirim: %15! - 05/05/2025
         </div>
       </div>
 
-      <div id="adminDashboard" class="page p-4 hidden">
+      <div id="adminDashboard" class="page p-4 hidden admin-section">
         <h2 class="text-2xl font-semibold mb-4">
           Shawarma Box - Yönetim Paneli
         </h2>
-        <div class="bg-amber-400 text-white p-4 rounded">
+        <div class="bg-amber-600 text-white p-4 rounded text-sm">
           Bekleyen Siparişler: 5<br />
           Günlük Gelir: 250 TL<br />
           Haftalık Trend: %10 Artış<br />
           Popüler Ürün: Tavuk Shawarma<br />
           En Aktif Şube: İstanbul<br />
-          Saatlik Siparişler: 10 (09:00-10:00)
+          Saatlik Siparişler: 10 (09:00-10:00)<br />
+          Toplam Müşteri: 120
         </div>
         <div class="mt-4">
-          <h3 class="font-semibold mb-2">Günlük Satışlar</h3>
+          <h3 class="font-semibold mb-2 text-sm">Günlük Satışlar</h3>
           <canvas
             id="salesChart"
             class="bg-amber-100 p-4 rounded shadow"
           ></canvas>
         </div>
         <div class="mt-4">
-          <h3 class="font-semibold mb-2">Sipariş Hacmi</h3>
+          <h3 class="font-semibold mb-2 text-sm">Sipariş Hacmi</h3>
           <canvas
             id="orderChart"
             class="bg-amber-100 p-4 rounded shadow"
           ></canvas>
         </div>
+        <div class="mt-4">
+          <h3 class="font-semibold mb-2 text-sm">Ürün Dağılımı</h3>
+          <canvas
+            id="productChart"
+            class="bg-amber-100 p-4 rounded shadow"
+          ></canvas>
+        </div>
         <button
-          class="mt-4 bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('orderManagement')"
         >
           Siparişleri Yönet
         </button>
       </div>
 
-      <div id="orderManagement" class="page p-4 hidden">
+      <div id="orderManagement" class="page p-4 hidden admin-section">
         <h2 class="text-2xl font-semibold mb-4">
           Shawarma Box - Sipariş Yönetimi
         </h2>
-        <div class="item bg-amber-100 p-4 rounded shadow">
-          Sipariş #12345 - Hazırlanıyor (Ahmet Yılmaz)
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12345 - Hazırlanıyor (Ahmet Yılmaz - Tavuk Shawarma)
           <button class="ml-2 text-amber-600 hover:underline">
             Durum Güncelle
           </button>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
-          Sipariş #12346 - Yolda (Ayşe Demir)
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12346 - Yolda (Ayşe Demir - Et Shawarma)
           <button class="ml-2 text-amber-600 hover:underline">
             Durum Güncelle
           </button>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
-          Sipariş #12347 - Teslim Edildi (Mehmet Kaya)
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12347 - Teslim Edildi (Mehmet Kaya - Vegan Shawarma)
           <button class="ml-2 text-amber-600 hover:underline">Detaylar</button>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
-          Sipariş #12348 - Alındı (Fatma Şahin)
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12348 - Alındı (Fatma Şahin - Kola, Patates)
           <button class="ml-2 text-amber-600 hover:underline">
             Durum Güncelle
           </button>
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
-          Sipariş #12349 - Hazırlanıyor (Zeynep Çelik)
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12349 - Hazırlanıyor (Zeynep Çelik - Baklava)
           <button class="ml-2 text-amber-600 hover:underline">
             Durum Güncelle
           </button>
+        </div>
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Sipariş #12350 - İptal Edildi (Ali Veli - Künefe)
+          <button class="ml-2 text-amber-600 hover:underline">Detaylar</button>
         </div>
         <button
-          class="mt-4 bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
         </button>
       </div>
 
-      <div id="customerData" class="page p-4 hidden">
+      <div id="customerData" class="page p-4 hidden admin-section">
         <h2 class="text-2xl font-semibold mb-4">
           Shawarma Box - Müşteri Verileri
         </h2>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Ahmet Yılmaz - 5 Sipariş - ahmet@example.com - 0532 123 4567 - Son
           Sipariş: 01/05/2025 - Toplam: 230 TL
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Ayşe Demir - 3 Sipariş - ayse@example.com - 0533 987 6543 - Son
           Sipariş: 28/04/2025 - Toplam: 150 TL
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Mehmet Kaya - 7 Sipariş - mehmet@example.com - 0534 555 1234 - Son
           Sipariş: 30/04/2025 - Toplam: 400 TL
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Fatma Şahin - 2 Sipariş - fatma@example.com - 0535 222 9876 - Son
           Sipariş: 25/04/2025 - Toplam: 80 TL
         </div>
-        <div class="item bg-amber-100 p-4 rounded shadow">
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
           Zeynep Çelik - 4 Sipariş - zeynep@example.com - 0536 777 5432 - Son
           Sipariş: 29/04/2025 - Toplam: 190 TL
         </div>
+        <div class="item bg-amber-100 p-4 rounded shadow mb-2 text-sm">
+          Ali Veli - 6 Sipariş - ali@example.com - 0537 444 3210 - Son Sipariş:
+          02/05/2025 - Toplam: 300 TL
+        </div>
         <div class="mt-4">
-          <h3 class="font-semibold mb-2">Müşteri Aktivite Trendi</h3>
+          <h3 class="font-semibold mb-2 text-sm">Müşteri Aktivite Trendi</h3>
           <canvas
             id="customerChart"
             class="bg-amber-100 p-4 rounded shadow"
           ></canvas>
         </div>
         <button
-          class="mt-4 bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-4 bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
         </button>
       </div>
 
-      <div id="promotionManagement" class="page p-4 max-w-md mx-auto hidden">
+      <div
+        id="promotionManagement"
+        class="page p-4 max-w-md mx-auto hidden admin-section"
+      >
         <h2 class="text-2xl font-semibold mb-4">
           Shawarma Box - Promosyon Yönetimi
         </h2>
         <div class="mb-4">
-          <label class="block mb-1">Promosyon Adı</label>
+          <label class="block mb-1 text-sm">Promosyon Adı</label>
           <input
             type="text"
             id="promoName"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             placeholder="Ör: Yaz İndirimi"
           />
         </div>
         <div class="mb-4">
-          <label class="block mb-1">İndirim Yüzdesi</label>
+          <label class="block mb-1 text-sm">İndirim Yüzdesi</label>
           <input
             type="number"
             id="promoDiscount"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
             placeholder="Ör: 10"
           />
         </div>
         <div class="mb-4">
-          <label class="block mb-1">Başlangıç Tarihi</label>
+          <label class="block mb-1 text-sm">Başlangıç Tarihi</label>
           <input
             type="date"
             id="promoStart"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
           />
         </div>
         <div class="mb-4">
-          <label class="block mb-1">Bitiş Tarihi</label>
+          <label class="block mb-1 text-sm">Bitiş Tarihi</label>
           <input
             type="date"
             id="promoEnd"
-            class="w-full p-2 rounded border border-gray-300"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
           />
         </div>
         <div class="mb-4">
-          <label class="block mb-1">Hedef Kitle</label>
-          <select class="w-full p-2 rounded border border-gray-300">
+          <label class="block mb-1 text-sm">Hedef Kitle</label>
+          <select class="w-full p-3 rounded border border-gray-300 text-sm">
             <option>Tüm Müşteriler</option>
             <option>Yeni Müşteriler</option>
             <option>Sadık Müşteriler</option>
           </select>
         </div>
-        <div class="bg-amber-100 p-4 rounded">
+        <div class="mb-4">
+          <label class="block mb-1 text-sm">Promosyon Kodu</label>
+          <input
+            type="text"
+            id="promoCode"
+            class="w-full p-3 rounded border border-gray-300 text-sm"
+            placeholder="Ör: YAZ10"
+          />
+        </div>
+        <div class="bg-amber-100 p-4 rounded text-sm">
           <h3 class="font-semibold">Önizleme</h3>
-          <p>Promosyon: [Ad] - [İndirim]% İndirim</p>
+          <p>Promosyon: [Ad] - [İndirim]% İndirim - Kod: [Kod]</p>
         </div>
         <button
-          class="w-full bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="w-full bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="alert('Promosyon Oluşturuldu')"
         >
           Oluştur
         </button>
         <button
-          class="mt-2 w-full bg-amber-400 text-white p-2 rounded hover:bg-amber-500 btn-ripple"
+          class="mt-2 w-full bg-amber-400 text-white p-3 rounded hover:bg-amber-500 btn-ripple text-sm"
           onclick="showPage('adminDashboard')"
         >
           Geri Dön
@@ -697,15 +861,22 @@
     </div>
 
     <script>
+      let isAdmin = false;
+
       function showPage(pageId) {
-        document.querySelectorAll(".page").forEach((page) => {
-          page.classList.remove("active");
-          page.classList.add("hidden");
-        });
-        const targetPage = document.getElementById(pageId);
-        targetPage.classList.remove("hidden");
-        setTimeout(() => targetPage.classList.add("active"), 10);
-        document.getElementById("sidebar").classList.add("sidebar-hidden");
+        const spinner = document.getElementById("spinner");
+        spinner.classList.add("active");
+        setTimeout(() => {
+          document.querySelectorAll(".page").forEach((page) => {
+            page.classList.remove("active");
+            page.classList.add("hidden");
+          });
+          const targetPage = document.getElementById(pageId);
+          targetPage.classList.remove("hidden");
+          setTimeout(() => targetPage.classList.add("active"), 10);
+          document.getElementById("sidebar").classList.add("sidebar-hidden");
+          spinner.classList.remove("active");
+        }, 300);
       }
 
       function toggleSidebar() {
@@ -718,6 +889,31 @@
         if (email && password) {
           alert("Giriş Başarılı! Ana Sayfaya Yönlendiriliyorsunuz...");
           showPage("home");
+        } else {
+          alert("Lütfen tüm alanları doldurun!");
+        }
+      }
+
+      function loginAdmin() {
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+        if (email && password) {
+          isAdmin = true;
+          document.getElementById("adminNav").classList.remove("hidden");
+          document
+            .getElementById("adminDashboardBtn")
+            .classList.remove("hidden");
+          document
+            .getElementById("orderManagementBtn")
+            .classList.remove("hidden");
+          document.getElementById("customerDataBtn").classList.remove("hidden");
+          document
+            .getElementById("promotionManagementBtn")
+            .classList.remove("hidden");
+          alert(
+            "Admin Girişi Başarılı! Yönetim Paneline Yönlendiriliyorsunuz..."
+          );
+          showPage("adminDashboard");
         } else {
           alert("Lütfen tüm alanları doldurun!");
         }
@@ -752,7 +948,12 @@
               },
             ],
           },
-          options: { scales: { y: { beginAtZero: true } } },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } },
+            plugins: { tooltip: { enabled: true } },
+          },
         });
 
         // Order Volume Chart (Bar)
@@ -768,7 +969,46 @@
               },
             ],
           },
-          options: { scales: { y: { beginAtZero: true } } },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } },
+            plugins: { tooltip: { enabled: true } },
+          },
+        });
+
+        // Product Distribution Chart (Pie)
+        new Chart(document.getElementById("productChart"), {
+          type: "pie",
+          data: {
+            labels: [
+              "Tavuk Shawarma",
+              "Et Shawarma",
+              "Vegan Shawarma",
+              "Patates",
+              "İçecekler",
+              "Tatlılar",
+            ],
+            datasets: [
+              {
+                label: "Ürün Dağılımı",
+                data: [40, 30, 10, 10, 5, 5],
+                backgroundColor: [
+                  "#FFC107",
+                  "#FFCA28",
+                  "#34D399",
+                  "#FBBF24",
+                  "#60A5FA",
+                  "#F87171",
+                ],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { tooltip: { enabled: true } },
+          },
         });
 
         // Customer Activity Chart (Line)
@@ -786,7 +1026,12 @@
               },
             ],
           },
-          options: { scales: { y: { beginAtZero: true } } },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } },
+            plugins: { tooltip: { enabled: true } },
+          },
         });
       });
     </script>
